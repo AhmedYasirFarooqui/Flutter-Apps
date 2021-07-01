@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,161 +13,117 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'Calculator'),
+      home: HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+class HomePage extends StatefulWidget {
+  const HomePage({Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  String output = "0";
-  String _output = "0";
-  double num1 = 0.0;
-  double num2 = 0.0;
-  String operand = "";
-  buttonPressed(String buttonText) {
-    if (buttonText == "AC") {
-      _output = "0";
-      num1 = 0.0;
-      num2 = 0.0;
-      operand = "";
-    } else if (buttonText == "+" ||
-        buttonText == "-" ||
-        buttonText == "/" ||
-        buttonText == "*") {
-      num1 = double.parse(output);
-      _output = "0";
-    } else if (buttonText == ".") {
-      if (_output.contains(".")) {
-        print("Already contains decimal");
-        return;
-      } else {
-        _output = _output + buttonText;
-      }
-    } else if (buttonText == "=") {
-      num2 = double.parse(output);
-      if (operand == "+") {
-        _output = (num1 + num2).toString();
-      }
-      if (operand == "-") {
-        _output = (num1 - num2).toString();
-      }
-      if (operand == "*") {
-        _output = (num1 * num2).toString();
-      }
-      if (operand == "/") {
-        _output = (num1 / num2).toString();
-      }
-      num1 = 0.0;
-      num2 = 0.0;
-      operand = "";
-    } else {
-      _output = _output + buttonText;
-    }
-    print(_output);
-    setState(() {
-      output = double.parse(output).toStringAsFixed(2);
-    });
-  }
-
-  Widget buildButton(String buttonText) {
-    return Expanded(
-      //this widget takes up all the available space
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 85.0,
-          width: 50.0,
-          child: ElevatedButton(
-            //elevation: 7.0,
-            onPressed: () => buttonPressed(buttonText),
-            child: Text(
-              buttonText,
-              style: TextStyle(
-                  fontSize: 23.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-          ),
+// ignore: non_constant_identifier_names
+Widget CustomButton(String _text, Color _color, Color _btnclr) {
+  return ElevatedButton(
+    child: Text(
+      _text,
+      style: TextStyle(color: _color, fontSize: 25.0, fontFamily: 'Lato'),
+    ),
+    onPressed: () => {},
+    style: ElevatedButton.styleFrom(
+      elevation: 8.0,
+      primary: _btnclr,
+      minimumSize: Size(75, 75),
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          color: Colors.blueGrey,
+    return Container(
+      color: Colors.grey[200],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Container(
-                margin: EdgeInsets.only(left: 260.0),
-                padding: EdgeInsets.symmetric(
-                  vertical: 24.0,
-                  horizontal: 12.0,
-                ),
-                child: Text(
-                  output,
-                  style: TextStyle(
-                    fontSize: 50.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white60,
-                  ),
+              SizedBox(
+                height: 180.0,
+              ),
+              Text(
+                '0',
+                style: TextStyle(
+                  decoration: TextDecoration.none,
+                  fontFamily: 'Lato',
+                  fontSize: 50.0,
+                  color: Colors.blueGrey,
+                  //fontWeight: FontWeight.bold,
                 ),
               ),
-              Expanded(
-                child: Divider(),
+              SizedBox(
+                height: 15.0,
               ),
-              Column(
+              Divider(
+                color: Colors.black,
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      buildButton('7'),
-                      buildButton('8'),
-                      buildButton('9'),
-                      buildButton('/'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      buildButton('4'),
-                      buildButton('5'),
-                      buildButton('6'),
-                      buildButton('*'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      buildButton('1'),
-                      buildButton('2'),
-                      buildButton('3'),
-                      buildButton('-'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      buildButton('.'),
-                      buildButton('0'),
-                      buildButton('00'),
-                      buildButton('+'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      buildButton('AC'),
-                      buildButton('='),
-                    ],
-                  ),
+                  CustomButton('7', Colors.black, Colors.grey[200]),
+                  CustomButton('8', Colors.black, Colors.grey[200]),
+                  CustomButton('9', Colors.black, Colors.grey[200]),
+                  CustomButton('-', Colors.grey[200], Colors.blueGrey),
+                ],
+              ),
+              SizedBox(height: 25.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomButton('4', Colors.black, Colors.grey[200]),
+                  CustomButton('5', Colors.black, Colors.grey[200]),
+                  CustomButton('6', Colors.black, Colors.grey[200]),
+                  CustomButton('/', Colors.grey[200], Colors.blueGrey),
+                ],
+              ),
+              SizedBox(height: 25.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomButton('1', Colors.black, Colors.grey[200]),
+                  CustomButton('2', Colors.black, Colors.grey[200]),
+                  CustomButton('3', Colors.black, Colors.grey[200]),
+                  CustomButton('*', Colors.grey[200], Colors.blueGrey),
+                ],
+              ),
+              SizedBox(height: 25.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomButton('0', Colors.black, Colors.grey[200]),
+                  CustomButton('.', Colors.black, Colors.grey[200]),
+                  CustomButton('=', Colors.black, Colors.grey[200]),
+                  CustomButton('+', Colors.grey[200], Colors.blueGrey),
+                ],
+              ),
+              SizedBox(height: 25.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomButton('C', Colors.blueGrey, Colors.grey[200]),
                 ],
               ),
             ],

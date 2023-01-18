@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1038698208691",
+    "project_id": "yards-login-signup",
+    "storage_bucket": "yards-login-signup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038698208691:android:9de5cd743ecb4b8e027fc6",
+        "android_client_info": {
+          "package_name": "com.example.yards_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038698208691-lc6l9j0bln1ftfm8r57tdft0n5532q83.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yards_app",
+            "certificate_hash": "459cb8ca68217c1fba82770db3a8a4e35bbffa16"
+          }
+        },
+        {
+          "client_id": "1038698208691-mm4njn3imfh3o2543g3aa0kc29mimtnc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAERSzeOdJKpQrB3S73eZviduuh3uxzF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038698208691-mm4njn3imfh3o2543g3aa0kc29mimtnc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

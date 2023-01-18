@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">yards_app</string>
+<string name="facebook_app_id">801078227591238</string>
+<string name="fb_login_protocol_scheme">fb801078227591238</string>
+<string name="facebook_client_token">6b682ab10d9f16e9b77f8444299cfa67</string>
+
+</resources>

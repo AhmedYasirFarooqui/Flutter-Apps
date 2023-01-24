@@ -36,24 +36,24 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     });
   }
 
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const TopicWiseQuizScreen(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        final offsetAnimation = animation.drive(tween);
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-    );
-  }
+  // Route _createRoute() {
+  //   return PageRouteBuilder(
+  //     pageBuilder: (context, animation, secondaryAnimation) =>
+  //         const TopicWiseQuizScreen(),
+  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+  //       const begin = Offset(1.0, 0.0);
+  //       const end = Offset.zero;
+  //       const curve = Curves.ease;
+  //       var tween =
+  //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+  //       final offsetAnimation = animation.drive(tween);
+  //       return SlideTransition(
+  //         position: offsetAnimation,
+  //         child: child,
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   void initState() {
@@ -65,15 +65,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    _pageController = AnimationController(
-      duration: const Duration(milliseconds: 800),
-      vsync: this,
-    );
-    _pageAnimation = CurvedAnimation(
-      parent: _pageController,
-      curve: Curves.fastOutSlowIn,
-    );
-    _pageController.forward();
+    // _pageController = AnimationController(
+    //   duration: const Duration(milliseconds: 800),
+    //   vsync: this,
+    // );
+    // _pageAnimation = CurvedAnimation(
+    //   parent: _pageController,
+    //   curve: Curves.fastOutSlowIn,
+    // );
+    // _pageController.forward();
     super.initState();
   }
 
@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   void dispose() {
     _formPopUpController.dispose();
     _anotherFormPopUpController.dispose();
-    _pageController.dispose();
+    //_pageController.dispose();
     super.dispose();
   }
 
@@ -158,15 +158,35 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       buttonColor: AppColors.lightGreen,
                       text: 'Sign Up',
                       textColor: AppColors.white,
+                      width: width * 0.8,
                       height: height * 0.06,
                     ),
                     SizedBox(height: height * 0.03),
-                    CustomButtons(
-                      onTap: () => Navigator.of(context).push(_createRoute()),
-                      buttonColor: AppColors.transparent,
-                      text: 'Enter As Guest',
-                      textColor: AppColors.green,
-                      height: height * 0.06,
+                    // CustomButtons(
+                    //   onTap: () => Navigator.of(context).push(
+                    //     MaterialPageRoute(
+                    //       builder: (_) => const TopicWiseQuizScreen(),
+                    //     ),
+                    //   ),
+                    //   buttonColor: AppColors.transparent,
+                    //   text: 'Enter As Guest',
+                    //   textColor: AppColors.green,
+                    //   height: height * 0.06,
+                    // ),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const TopicWiseQuizScreen(),
+                        ),
+                      ),
+                      child: const Text(
+                        'Enter as Guest',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.green,
+                          fontSize: 20.0,
+                        ),
+                      ),
                     ),
                     SizedBox(height: height * 0.07),
                     Row(
@@ -279,8 +299,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         text: 'Log In',
                       ),
                       SizedBox(height: height * 0.04),
-                      InkWell(
-                        onTap: () {},
+                      TextButton(
+                        onPressed: () {},
                         child: const Text(
                           'Forgot Password',
                           style: TextStyle(

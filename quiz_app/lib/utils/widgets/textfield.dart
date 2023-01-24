@@ -25,17 +25,23 @@ class TextFields extends StatefulWidget {
 }
 
 class _TextFieldsState extends State<TextFields> {
+  final FocusNode _focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: TextFormField(
+        focusNode: _focusNode,
         controller: widget.controller,
         validator: widget.validator,
         style: const TextStyle(
           color: AppColors.green,
           fontSize: 16.0,
         ),
+        onEditingComplete: () {
+          _focusNode.unfocus();
+        },
         obscureText: widget.isObscure,
         cursorColor: AppColors.green,
         decoration: InputDecoration(
@@ -62,12 +68,21 @@ class _TextFieldsState extends State<TextFields> {
                     )
                   : const SizedBox(),
           hintText: widget.hintText,
+          errorStyle: const TextStyle(
+            fontSize: 13.0,
+            fontWeight: FontWeight.w500,
+            color: AppColors.red,
+          ),
           hintStyle: TextStyle(
-            color: Colors.grey[400],
+            color: AppColors.grey,
             fontSize: 16.0,
           ),
           fillColor: AppColors.white,
           filled: true,
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.white),
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: AppColors.white),

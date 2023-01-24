@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:quiz_app/utils/colors.dart';
 import 'package:quiz_app/utils/services/api_service.dart';
+import 'package:quiz_app/utils/widgets/buttons.dart';
 
 import 'modal/questions_modal.dart';
 
@@ -61,6 +61,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   String selectedAnswer = '';
   int increment = 0;
+  int getindex = 0;
   PageController pageViewController = PageController();
 
   @override
@@ -68,44 +69,97 @@ class _QuizScreenState extends State<QuizScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: AppColors.green,
+      backgroundColor: AppColors.lightGreen,
+      appBar: AppBar(
+        title: const Text(
+          '00:00',
+          style: TextStyle(
+            fontSize: 50.0,
+            fontWeight: FontWeight.bold,
+            color: AppColors.white,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: AppColors.lightGreen,
+        elevation: 0.0,
+        toolbarHeight: height * 0.15,
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      // ),
       body: questions != null && questions!.isNotEmpty
-          ? Column(
-              children: [
-                Expanded(
-                  child: PageView.builder(
-                    controller: pageViewController,
-                    itemCount: questions!.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        color: AppColors.green,
-                        width: width,
-                        height: height,
-                        child: Column(
+          ? Container(
+              decoration: const BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15.0),
+                  topRight: Radius.circular(15.0),
+                ),
+              ),
+              height: height * 0.8,
+              child: Column(
+                children: [
+                  Text(
+                    '${getindex + 1}/${questions!.length}',
+                    style: const TextStyle(
+                      color: AppColors.green,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  Expanded(
+                    child: PageView.builder(
+                      controller: pageViewController,
+                      itemCount: questions!.length,
+                      allowImplicitScrolling: true,
+                      onPageChanged: (index) {
+                        setState(() {
+                          getindex = index;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            SizedBox(height: height / 3),
+                            SizedBox(height: height * 0.01),
                             Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 12.0),
-                              child: SizedBox(
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Container(
                                 width: width,
-                                height: height / 10,
-                                child: Text(
-                                  'Q ${index + 1}: ${questions![index].question}',
-                                  textAlign: TextAlign.justify,
-                                  style: const TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 16.0,
+                                height: height * 0.1,
+                                padding: const EdgeInsets.all(5.0),
+                                decoration: BoxDecoration(
+                                  // border: Border.all(
+                                  //   color: AppColors.green,
+                                  // ),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: AppColors.green,
+                                      blurRadius: 2.5,
+                                      spreadRadius: 0.5,
+                                      blurStyle: BlurStyle.outer,
+                                      offset: Offset(0.0, 0.0),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${questions![index].question}',
+                                    textAlign: TextAlign.justify,
+                                    style: const TextStyle(
+                                      color: AppColors.green,
+                                      fontSize: 16.0,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                            //const SizedBox(height: 20.0),
                             questions![index].answers != null
                                 ? Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 1.0),
                                     width: width,
+                                    height: height * 0.54,
+                                    //color: Colors.blue,
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -120,7 +174,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                     .answerA!,
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 0.0),
+                                                  horizontal: 0.0,
+                                                ),
                                                 groupValue: selectedAnswer,
                                                 value: questions![index]
                                                     .answers!
@@ -142,7 +197,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                     .answerB!,
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 0.0),
+                                                  horizontal: 0.0,
+                                                ),
                                                 groupValue: selectedAnswer,
                                                 value: questions![index]
                                                     .answers!
@@ -164,13 +220,14 @@ class _QuizScreenState extends State<QuizScreen> {
                                                     .answerC!,
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 0.0),
+                                                  horizontal: 0.0,
+                                                ),
                                                 groupValue: selectedAnswer,
                                                 value: questions![index]
                                                     .answers!
                                                     .answerC!,
                                                 onChanged: (String newValue) {
-                                                  log("$newValue");
+                                                  log(newValue);
                                                   setState(
                                                     () {
                                                       selectedAnswer = newValue;
@@ -187,7 +244,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                     .answerD!,
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 0.0),
+                                                  horizontal: 0.0,
+                                                ),
                                                 groupValue: selectedAnswer,
                                                 value: questions![index]
                                                     .answers!
@@ -209,7 +267,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                     .answerE!,
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 0.0),
+                                                  horizontal: 0.0,
+                                                ),
                                                 groupValue: selectedAnswer,
                                                 value: questions![index]
                                                     .answers!
@@ -231,7 +290,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                     .answerF!,
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 0.0),
+                                                  horizontal: 0.0,
+                                                ),
                                                 groupValue: selectedAnswer,
                                                 value: questions![index]
                                                     .answers!
@@ -251,40 +311,12 @@ class _QuizScreenState extends State<QuizScreen> {
                                   )
                                 : const SizedBox(),
                           ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                SizedBox(height: height / 10),
-                GestureDetector(
-                  onTap: () {
-                    pageViewController.nextPage(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeIn,
-                    );
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    height: height / 15,
-                    child: const Center(
-                      child: Text(
-                        'Next',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.green,
-                          fontSize: 20.0,
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ),
-                ),
-                const SizedBox(height: 10.0),
-              ],
+                ],
+              ),
             )
           : const Center(
               child: SizedBox(
@@ -329,7 +361,7 @@ class LabeledRadio extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Radio<String>(
-              activeColor: Colors.white,
+              activeColor: AppColors.lightGreen,
               groupValue: groupValue,
               value: value,
               onChanged: (String? newValue) {
@@ -357,18 +389,18 @@ class Options extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
+      color: AppColors.transparent,
       alignment: Alignment.centerLeft,
-      height: height / 20,
-      width: width / 1.2,
+      height: height * 0.08,
+      width: width * 0.8,
       child: Text(
         answers!,
         softWrap: true,
-        maxLines: 3,
-        textDirection: TextDirection.ltr,
-        textAlign: TextAlign.start,
+        //textDirection: TextDirection.ltr,
+        textAlign: TextAlign.justify,
         style: const TextStyle(
           fontSize: 16.0,
-          color: Colors.white,
+          color: AppColors.green,
         ),
       ),
     );

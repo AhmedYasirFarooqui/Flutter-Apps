@@ -6,4 +6,5 @@ class AppColors {
   static const green = Color.fromRGBO(129, 199, 132, 1);
   static const white = Colors.white;
   static const red = Colors.red;
+  static Color? grey = Colors.grey[400];
 }

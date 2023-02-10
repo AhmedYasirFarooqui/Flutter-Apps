@@ -26,6 +26,7 @@ class TextFields extends StatefulWidget {
 
 class _TextFieldsState extends State<TextFields> {
   final FocusNode _focusNode = FocusNode();
+  double radius = 15.0;
 
   @override
   Widget build(BuildContext context) {
@@ -80,19 +81,19 @@ class _TextFieldsState extends State<TextFields> {
           fillColor: AppColors.white,
           filled: true,
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(radius),
             borderSide: const BorderSide(color: AppColors.white),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(radius),
             borderSide: const BorderSide(color: AppColors.white),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(radius),
             borderSide: const BorderSide(color: AppColors.white),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(radius),
             borderSide: const BorderSide(color: AppColors.white),
           ),
         ),

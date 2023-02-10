@@ -218,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppColors.lightGreen,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   width: width * 0.93,
                   height: height * 0.78,
@@ -327,7 +327,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppColors.lightGreen,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   width: width * 0.93,
                   height: height * 0.78,

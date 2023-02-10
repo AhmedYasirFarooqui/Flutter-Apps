@@ -22,27 +22,6 @@ class CustomButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return InkWell(
-    //   onTap: onTap,
-    //   child: Container(
-    //     margin: const EdgeInsets.symmetric(horizontal: 15.0),
-    //     decoration: BoxDecoration(
-    //       color: buttonColor ?? AppColors.lightGreen,
-    //       borderRadius: BorderRadius.circular(8),
-    //     ),
-    //     height: height,
-    //     child: Center(
-    //       child: Text(
-    //         text ?? '',
-    //         style: TextStyle(
-    //           fontWeight: FontWeight.w600,
-    //           color: textColor ?? AppColors.white,
-    //           fontSize: 20.0,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: ElevatedButton(
@@ -52,7 +31,7 @@ class CustomButtons extends StatelessWidget {
           elevation: 0.0,
           //minimumSize: Size(width!, height!),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(15.0),
           ),
         ),
         onPressed: onTap,

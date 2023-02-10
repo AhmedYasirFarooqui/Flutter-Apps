@@ -13,15 +13,11 @@ class TopicWiseQuizScreen extends StatefulWidget {
 }
 
 class _TopicWiseQuizScreenState extends State<TopicWiseQuizScreen> {
-  List<String>? logos = [
-    Assets.laravel,
-    Assets.php,
-    Assets.kubernetes,
-    Assets.linux,
-    Assets.bash,
-    Assets.docker,
-    Assets.wordpress,
-    Assets.html5,
+  List<String>? topics = [
+    "Computer Science",
+    "Maths",
+    "History",
+    "Geography",
   ];
 
   @override
@@ -120,19 +116,13 @@ class _TopicWiseQuizScreenState extends State<TopicWiseQuizScreen> {
               child: Column(
                 children: [
                   Expanded(
-                    child: GridView.builder(
+                    child: ListView.builder(
                       padding: const EdgeInsets.all(10.0),
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 3 / 4,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemCount: logos!.length,
+                      itemCount: topics!.length,
+                      itemExtent: 115,
                       itemBuilder: (context, index) {
                         return QuizTopicContainer(
-                          image: logos![index],
+                          topic: topics![index],
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(

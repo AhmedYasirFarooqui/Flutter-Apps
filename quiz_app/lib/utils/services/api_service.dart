@@ -1,22 +1,25 @@
 import 'dart:convert';
+// import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:quiz_app/modal/questions_modal.dart';
 
 class ApiService {
+  List<Questions> questions = [];
+
   Future<List<Questions>> getQuestions() async {
-    const String baseUrl = 'https://quizapi.io';
-    const String endPoint = 'api/v1/questions';
-    const String apiKey = 'xS7ALZlrJlBMcTA8H2n4seaz4ktohxn2aIUFCCi1';
-    const String limit = '10';
-    final response = await http
-        .get(Uri.parse('$baseUrl/$endPoint?apiKey=$apiKey&limit=$limit'));
+    // log('Start');
+    const String baseUrl = 'https://opentdb.com/api.php?amount=15&category=18';
+
+    final response = await http.get(
+      Uri.parse(baseUrl),
+    );
+    // log(response.statusCode.toString());
 
     if (response.statusCode == 200) {
-      List<Questions> questions = [];
       final temp = jsonDecode(response.body);
-      for (final question in temp) {
-        questions.add(Questions.fromJson(question));
-      }
+      questions.add(Questions.fromJson(temp));
+
+      // log(questions.toString());
       return questions;
     } else {
       throw Exception('Questions not found. from api service.');

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "317535054461",
+    "project_id": "mystic-mandela-notification",
+    "storage_bucket": "mystic-mandela-notification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317535054461:android:9e3b15927c4a73c2c21f14",
+        "android_client_info": {
+          "package_name": "org.com.mysticmandala"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317535054461-36ap444gkae3ku1eg5ccv6avu5rlphvk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG7_cWPR4Jok6_dWRHZUoN4H6iN-S56oM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317535054461-36ap444gkae3ku1eg5ccv6avu5rlphvk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

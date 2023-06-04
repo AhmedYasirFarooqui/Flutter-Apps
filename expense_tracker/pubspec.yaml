@@ -14,11 +14,11 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   date_time_picker: ^2.1.0
-  get: ^4.6.5
   sqflite: ^2.2.2
   get_storage: ^2.0.3
   flutter_datetime_picker: ^1.5.1
   syncfusion_flutter_charts: ^20.2.44
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

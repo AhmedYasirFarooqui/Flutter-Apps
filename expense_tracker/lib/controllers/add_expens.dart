@@ -3,22 +3,22 @@
 import 'dart:developer';
 
 import 'package:expense_tracker/modal.dart';
-import 'package:get/state_manager.dart';
+import 'package:flutter/material.dart';
 
-class AddExpenseController extends GetxController {
-  final RxString _title = ''.obs;
-  final RxString _description = ''.obs;
-  final RxInt _amount = 0.obs;
-  final RxString _selectedDate = 'Date'.obs;
-  final RxString _selectedTime = 'Time'.obs;
-  final RxString _dropdownValue = 'Expenses'.obs;
-  RxInt? totalIncome = 0.obs;
-  RxInt? totalExpenses = 0.obs;
-  final List<AmountInformation>? data = [];
-  final List? income = [];
-  final List? expenses = [];
+class AddExpenseController with ChangeNotifier {
+  String _title = '';
+  String _description = '';
+  int _amount = 0;
+  String _selectedDate = 'Date';
+  String _selectedTime = 'Time';
+  String _dropdownValue = 'Expenses';
+  int? totalIncome = 0;
+  int? totalExpenses = 0;
+  List<AmountInformation>? data = [];
+  List? income = [];
+  List? expenses = [];
 
-  final List<String> options = [
+  List<String> options = [
     '1',
     '2',
     '3',
@@ -32,29 +32,22 @@ class AddExpenseController extends GetxController {
     'Delete',
   ];
 
-  // @override
-  // void onInit() async {
-  //   // TODO: implement onInit
-  //   super.onInit();
-  //   await getData();
-  // }
-
   // for title
-  String get title => _title.value;
+  String get title => _title;
 
-  set Gettitle(value) {
-    _title.value = value;
+  set getTitle(value) {
+    _title = value;
   }
 
   handleTitle({required String title}) {
-    Gettitle = title;
+    getTitle = title;
   }
 
-  // for discription
-  String get description => _description.value;
+  // for description
+  String get description => _description;
 
   set Getdescription(value) {
-    _description.value = value;
+    _description = value;
   }
 
   handleDescription({required String description}) {
@@ -63,10 +56,10 @@ class AddExpenseController extends GetxController {
 
   // for amount
 
-  int get amount => _amount.value;
+  int get amount => _amount;
 
   set Getamount(value) {
-    _amount.value = value;
+    _amount = value;
   }
 
   handleAmount({required int amount}) {
@@ -75,44 +68,46 @@ class AddExpenseController extends GetxController {
 
   /// for date and time
 
-  String get selectedDate => _selectedDate.value;
+  String get selectedDate => _selectedDate;
 
   set selectedDate(value) {
-    _selectedDate.value = value;
+    _selectedDate = value;
   }
 
-  handleSelected({required final date}) {
+  handleSelected({required date}) {
     selectedDate = date;
+    notifyListeners();
   }
 
-  String get selectedTime => _selectedTime.value;
+  String get selectedTime => _selectedTime;
 
   set selectedTime(value) {
-    _selectedTime.value = value;
+    _selectedTime = value;
   }
 
-  handleSelectedTime({required final time}) {
+  handleSelectedTime({required time}) {
     selectedTime = time;
+    notifyListeners();
   }
 
   // for dropdown
-  String get dropdownValue => _dropdownValue.value;
+  String get dropdownValue => _dropdownValue;
 
   set dropDown(value) {
-    _dropdownValue.value = value;
+    _dropdownValue = value;
   }
 
-  handleDropDownValue({required final dropdown}) {
+  handleDropDownValue({required dropdown}) {
     dropDown = dropdown;
   }
 
   void add({
-    required final title1,
-    required final description1,
-    required final selectedDate1,
-    required final selectedTime1,
-    required final amount1,
-    required final typeOfAmount1,
+    required title1,
+    required description1,
+    required selectedDate1,
+    required selectedTime1,
+    required amount1,
+    required typeOfAmount1,
   }) async {
     final amountInformation = AmountInformation(
       title: title1,
@@ -127,15 +122,9 @@ class AddExpenseController extends GetxController {
       try {
         income!.add(amountInformation.amount);
         log(income!.toString());
-        // for (int i = 0; i < income!.length; ++i) {
-        //   totalIncome!.value += income![i] as int;
-        //   log('${totalIncome!} total income');
-        // }
-        for (var value in income!) {
-          totalIncome!.value += value as int;
-          log('${totalIncome!} total income');
-        }
-        update();
+        totalIncome = income!.reduce((value, element) => value + element);
+        log('${totalIncome!} total income');
+        notifyListeners();
       } catch (e) {
         log(e.toString());
       }
@@ -143,15 +132,8 @@ class AddExpenseController extends GetxController {
       expenses!.add(amountInformation.amount);
       log(expenses!.toString());
       try {
-        // for (int i = 0; i < expenses!.length; ++i) {
-        //   totalExpenses!.value += expenses![i] as int;
-        //   log('${totalExpenses!} total expense');
-        // }
-        for (var value in expenses!) {
-          totalExpenses!.value += value as int;
-          log('${totalExpenses!} total expense');
-        }
-        update();
+        totalExpenses = expenses!.reduce((value, element) => value + element);
+        notifyListeners();
       } catch (e) {
         log(e.toString());
       }
@@ -162,20 +144,8 @@ class AddExpenseController extends GetxController {
     data!.clear();
     income!.clear();
     expenses!.clear();
-    totalIncome!.value = 0;
-    totalExpenses!.value = 0;
-    update();
-  }
-
-  deleteAmount(String amount) {
-    amount.substring(0, amount.length - 1);
-    update();
-    return amount;
-  }
-
-  addAmount(String amount, int index) {
-    amount += amount[index];
-    update();
-    return amount;
+    totalIncome = 0;
+    totalExpenses = 0;
+    notifyListeners();
   }
 }

@@ -9,17 +9,25 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'show_expenses.dart';
 
-class AddExpenses extends GetView<AddExpenseController> {
-  AddExpenses({Key? key}) : super(key: key);
-  final _formKey = GlobalKey<FormState>();
+class AddExpenses extends StatefulWidget {
+  const AddExpenses({super.key});
+
+  @override
+  State<AddExpenses> createState() => _AddExpensesState();
+}
+
+class _AddExpensesState extends State<AddExpenses> {
+  // final _formKey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     log('build expense');
+    final controller = Provider.of<AddExpenseController>(context);
     return Scaffold(
       backgroundColor: Colors.grey[300],
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
@@ -33,7 +41,11 @@ class AddExpenses extends GetView<AddExpenseController> {
             selectedTime1: controller.selectedTime,
             typeOfAmount1: controller.dropdownValue,
           );
-          Get.to(() => MyHomePage());
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => MyHomePage(),
+            ),
+          );
         },
         elevation: 0.0,
         backgroundColor: Colors.blue,
@@ -58,24 +70,32 @@ class AddExpenses extends GetView<AddExpenseController> {
       ),
       body: ListView(
         children: [
-          TextFields(
-            controller: titleController,
-            onChanged: (mytitle) {
-              controller.handleTitle(title: mytitle);
+          Consumer<AddExpenseController>(
+            builder: (context, value, child) {
+              return TextFields(
+                controller: titleController,
+                onChanged: (title) {
+                  value.handleTitle(title: title);
+                },
+                hinttext: 'Title',
+                readOnly: false,
+                maxlines: 1,
+              );
             },
-            hinttext: 'Title',
-            readOnly: false,
-            maxlines: 1,
           ),
           SizedBox(height: 8.0),
-          TextFields(
-            controller: descriptionController,
-            onChanged: (mydescription) {
-              controller.handleDescription(description: mydescription);
+          Consumer<AddExpenseController>(
+            builder: (context, value, child) {
+              return TextFields(
+                controller: descriptionController,
+                onChanged: (mydescription) {
+                  value.handleDescription(description: mydescription);
+                },
+                hinttext: 'Description',
+                readOnly: false,
+                maxlines: 5,
+              );
             },
-            hinttext: 'Description',
-            readOnly: false,
-            maxlines: 5,
           ),
           SizedBox(height: 8.0),
           Row(
@@ -120,8 +140,10 @@ class AddExpenses extends GetView<AddExpenseController> {
                 child: Row(
                   children: [
                     SizedBox(width: 10.0),
-                    Obx(
-                      () => Text(controller.selectedDate),
+                    Consumer<AddExpenseController>(
+                      builder: (context, value, child) {
+                        return Text(value.selectedDate);
+                      },
                     ),
                     SizedBox(),
                   ],
@@ -175,8 +197,10 @@ class AddExpenses extends GetView<AddExpenseController> {
                 child: Row(
                   children: [
                     SizedBox(width: 10.0),
-                    Obx(
-                      () => Text(controller.selectedTime),
+                    Consumer<AddExpenseController>(
+                      builder: (context, value, child) {
+                        return Text(value.selectedTime);
+                      },
                     ),
                     SizedBox(),
                   ],
@@ -187,63 +211,67 @@ class AddExpenses extends GetView<AddExpenseController> {
           SizedBox(height: 8.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 9.0),
-            child: Container(
-              height: 50.0,
-              width: 60.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              padding: const EdgeInsets.all(9.0),
-              child: Obx(
-                () => DropdownButton<String>(
-                  borderRadius: BorderRadius.circular(10.0),
-                  isExpanded: true,
-                  value: controller.dropdownValue,
-                  icon: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    size: 30.0,
+            child: Consumer<AddExpenseController>(
+              builder: (context, value, child) {
+                return Container(
+                  height: 50.0,
+                  width: 60.0,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  dropdownColor: Colors.white,
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.black),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.transparent,
+                  padding: const EdgeInsets.all(9.0),
+                  child: DropdownButton<String>(
+                    borderRadius: BorderRadius.circular(10.0),
+                    isExpanded: true,
+                    value: value.dropdownValue,
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      size: 30.0,
+                    ),
+                    dropdownColor: Colors.white,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.black),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.transparent,
+                    ),
+                    onChanged: (String? newValue) {
+                      value.handleDropDownValue(dropdown: newValue);
+                    },
+                    items: <String>[
+                      'Expenses',
+                      'Income',
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
-                  onChanged: (String? newValue) {
-                    controller.handleDropDownValue(dropdown: newValue);
-                    // setState(() {
-                    //   dropdownValue!.value = newValue!;
-                    // });
-                  },
-                  items: <String>[
-                    'Expenses',
-                    'Income',
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
+                );
+              },
             ),
           ),
           SizedBox(height: 8.0),
-          TextFields(
-            controller: amountController,
-            hinttext: 'Amount',
-            maxlines: 1,
-            onChanged: (value) {},
-            readOnly: true,
+          Consumer<AddExpenseController>(
+            builder: (context, value, child) {
+              return TextFields(
+                controller: amountController,
+                hinttext: 'Amount',
+                maxlines: 1,
+                onChanged: (myvalue) {
+                  value.handleAmount(amount: int.tryParse(myvalue)!);
+                },
+                readOnly: true,
+              );
+            },
           ),
           SizedBox(height: 8.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: GetBuilder<AddExpenseController>(
-              init: AddExpenseController(),
-              builder: (controller) {
+            child: Consumer<AddExpenseController>(
+              builder: (context, value, child) {
                 return GridView.builder(
                   shrinkWrap: true,
                   itemCount: controller.options.length,

@@ -3,14 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../provider/count_provider.dart';
 
-class CountExample extends StatefulWidget {
-  const CountExample({Key? key}) : super(key: key);
+class CountExample extends StatelessWidget {
+  const CountExample({super.key});
 
-  @override
-  CountExampleState createState() => CountExampleState();
-}
-
-class CountExampleState extends State<CountExample> {
   @override
   Widget build(BuildContext context) {
     final countProvider = Provider.of<CountProvider>(
@@ -27,6 +22,7 @@ class CountExampleState extends State<CountExample> {
       body: Center(
         child: Consumer<CountProvider>(
           builder: (context, value, child) {
+            debugPrint('build text');
             return Text(
               value.count.toString(),
               style: const TextStyle(fontSize: 50.0),
